@@ -5,6 +5,7 @@
 VAR
 	bExecuteComplete: BOOL;
 	nStateChanges	: INT;
+	testVar : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
