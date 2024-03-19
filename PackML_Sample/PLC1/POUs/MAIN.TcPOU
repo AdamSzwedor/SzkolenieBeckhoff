@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="MAIN" Id="{52398f7a-babb-4f85-9ef7-be3bd41343dc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbConveyor	: FB_Conveyor;
+	sMode		: STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbConveyor(
+	eModeCommand			:= , 
+	eCommand				:= , 
+	eMode					=> , 
+	eState					=> , 
+	bUndefinedDone			=> , 
+	bInvalidModeCommandOut	=> , 
+	bChangeIntoProduction	=> );
+sMode := F_UnitModeToString(fbConveyor.eMode);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

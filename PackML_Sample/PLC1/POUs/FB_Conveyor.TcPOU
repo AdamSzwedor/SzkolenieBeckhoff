@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_Conveyor" Id="{9df1c638-35b3-49a7-b21b-402a6466bb05}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Conveyor EXTENDS FB_Generic
+VAR
+	bExecuteComplete: BOOL;
+	nStateChanges	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="M_Execute" Id="{8742ee40-11c8-4a3a-8440-d53d83ebace3}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'M_Execute'}
+METHOD M_Execute
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bExecuteComplete THEN
+	bExecuteComplete := FALSE;
+	M_StateComplete();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_Resetting" Id="{ab1acdfd-3a9a-4b1d-b99f-106863350fe2}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'M_Resetting'}
+METHOD M_Resetting
+VAR_INST
+	delay	: TON;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[delay( IN := NOT delay.Q, PT := T#2S );
+
+IF delay.Q THEN
+	THIS^.M_StateComplete();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_StateComplete" Id="{95201eb5-7bf4-4247-b3f1-01ab3a380f58}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'M_StateComplete'}
+METHOD M_StateComplete
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nStateChanges := nStateChanges + 1;
+SUPER^.M_StateComplete();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
